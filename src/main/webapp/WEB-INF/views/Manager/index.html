@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Читатели</title>
+</head>
+<body>
+<h2 >Список читателей:</h2>
+<br>
+<div th:each="person : ${AllManager}">
+    <p  th:text="${person.getName()}">user</p>
+</div>
+</body>
+</html>

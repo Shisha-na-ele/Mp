@@ -15,18 +15,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
-
 import javax.sql.DataSource;
 import java.util.Objects;
 
-@Configuration // обозначает что этот класс конфигурации спринг
-@ComponentScan("com.mp") // find Spring component for directory
-@EnableWebMvc // позволяет поддерживать @Controller and @RequestMapping
-@PropertySource("classpath:database.properties") // указывает путь к фалу с настройками подключения
-// имплементим интерфейс позваляющий заменить стандартный шаблонизатор на Thymeleaf Spring5
+
+
+@Configuration
+@ComponentScan("com.mp")
+@EnableWebMvc
+@PropertySource("classpath:database.properties")
 public class SpringConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
-    private final Environment environment; // дает доступ к файлу с свойствами "classpath:database.properties"
+    private final Environment environment; // дает доступ к файлу с свойствами "classpath:hibernate.properties"
 
     @Autowired
     public SpringConfig(ApplicationContext applicationContext, Environment environment) {
@@ -80,4 +80,30 @@ public class SpringConfig implements WebMvcConfigurer {
     public JdbcTemplate jdbcTemplate(DataSource dataSource){
         return new JdbcTemplate(dataSource);
     }
+
+//    private Properties hibernateProperties() {
+//        Properties properties = new Properties();
+//        properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
+//        properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
+//
+//        return properties;
+//    }
+//
+//    @Bean
+//    public LocalSessionFactoryBean sessionFactory() {
+//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+//        sessionFactory.setDataSource(dataSource());
+//        sessionFactory.setPackagesToScan("com.mp.model");
+//        sessionFactory.setHibernateProperties(hibernateProperties());
+//
+//        return sessionFactory;
+//    }
+//
+//    @Bean
+//    public PlatformTransactionManager hibernateTransactionManager() {
+//        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+//        transactionManager.setSessionFactory(sessionFactory().getObject());
+//
+//        return transactionManager;
+//    }
 }
